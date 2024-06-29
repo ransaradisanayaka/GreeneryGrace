@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="paneHolder" prefHeight="650.0" prefWidth="982.0" style="-fx-background-color: linear-gradient(from 0.0% 0.0% to 62.1212% 100.0%, #8cf270 0.0%, #dbf4ba 94.7011%, #dbf4ba 100.0%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Greenery.Controller.DashboardFormController">
+   <children>
+      <ImageView fitHeight="574.0" fitWidth="982.0" layoutX="-1.0" layoutY="75.0" opacity="0.82">
+         <image>
+            <Image url="@../asserts/photo_2024-05-12_13-06-43.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="105.0" layoutY="89.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-color: #f0fff0; -fx-background-radius: 15;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <Label fx:id="lblOrderCount" alignment="CENTER_RIGHT" layoutX="138.0" layoutY="11.0" prefHeight="54.0" prefWidth="28.0" text="0" textFill="#ef0d0d">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="37.0" layoutY="121.0" text="Order Count" textFill="#183c53">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="54.0" fitWidth="60.0" layoutX="30.0" layoutY="38.0">
+               <image>
+                  <Image url="@../asserts/odericon-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label layoutX="105.0" layoutY="12.0" prefHeight="54.0" prefWidth="302.0" text="DASHBOARD">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="383.0" layoutY="94.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-color: #f0fff0; -fx-background-radius: 15;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <Label fx:id="lblCustomerCount" alignment="CENTER_RIGHT" layoutX="121.0" layoutY="9.0" prefHeight="70.0" prefWidth="50.0" text="0" textFill="#db1c07">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="125.0" text="Customer Count" textFill="#191a19">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="83.0" fitWidth="103.0" layoutX="8.0" layoutY="22.0" style="-fx-effect: white;">
+               <image>
+                  <Image url="@../asserts/employeeatten-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="39.0" fitWidth="60.0" layoutX="34.0" layoutY="21.0">
+         <image>
+            <Image url="@../asserts/dashboRd-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <BarChart fx:id="barChart" layoutX="94.0" layoutY="316.0" opacity="0.72" prefHeight="310.0" prefWidth="782.0" style="-fx-background-color: #f0fff0;">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.1497076004743576" green="0.3368421196937561" blue="0.0249512679874897" />
+               </color>
+            </DropShadow>
+         </effect>
+      </BarChart>
+      <AnchorPane layoutX="653.0" layoutY="89.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-color: #f0fff0; -fx-background-radius: 15;">
+         <children>
+            <Label layoutX="7.0" layoutY="121.0" prefHeight="27.0" prefWidth="155.0" text="Employee Attendance">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblEmployeeAttendance" layoutX="130.0" layoutY="34.0" text="0" textFill="#bf1919">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="76.0" fitWidth="77.0" layoutX="22.0" layoutY="29.0">
+               <image>
+                  <Image url="@../asserts/employee-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

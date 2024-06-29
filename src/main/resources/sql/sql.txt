@@ -1,0 +1,117 @@
+CREATE DATABASE greenerygrace;
+
+use greenerygrace;
+
+CREATE TABLE user(
+  userId VARCHAR(10) PRIMARY KEY,
+  userName VARCHAR(20),
+  passWord VARCHAR(12)
+);
+
+
+insert into user (userId,userName,passWord) values
+('U001','ransara','1234');
+
+CREATE TABLE employee(
+  employeeId VARCHAR(6) PRIMARY KEY,
+  employeeName VARCHAR(20),
+  employeeAddress VARCHAR(50),
+employeeContact VARCHAR(15),
+description VARCHAR(50),
+  employeeNIC VARCHAR(20)
+
+);
+
+
+CREATE TABLE product(
+  productId VARCHAR(6) PRIMARY KEY,
+  productName VARCHAR(10),
+  qty VARCHAR(8),
+  description VARCHAR(50),
+  unitPrice VARCHAR(6)
+);
+
+CREATE TABLE productEmployeeDetails (
+  productId VARCHAR(8),
+  employeeId VARCHAR(8),
+  FOREIGN KEY (productId) REFERENCES product (productId) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (employeeId) REFERENCES employee (employeeId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE payment(
+  paymentId VARCHAR(10) PRIMARY KEY,
+  paymentMethod VARCHAR(20),
+amount VARCHAR(10),
+  date VARCHAR(16),
+customerId VARCHAR(10),
+FOREIGN KEY (customerId) REFERENCES customer(customerId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE customer(
+  customerId VARCHAR(10) PRIMARY KEY,
+  customerName VARCHAR(20),
+  customerAddress VARCHAR(50),
+  customerContact VARCHAR(15)
+);
+
+CREATE TABLE orders (
+  orderId  VARCHAR(10) PRIMARY KEY,
+  orderQty VARCHAR(6),
+amount VARCHAR(10),
+description varchar(60),
+  customerId VARCHAR(10),
+
+  FOREIGN KEY (customerId) REFERENCES customer (customerId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE stock(
+  stockId VARCHAR(6) PRIMARY KEY,
+name VARCHAR(20),
+  qtyOnHand VARCHAR(6),
+  type VARCHAR(30)
+);
+
+CREATE TABLE orderDetail (
+  orderId VARCHAR(10),
+  productId VARCHAR(8),
+  FOREIGN KEY (orderId) REFERENCES orders (orderId) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (productId) REFERENCES product(productId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE productDetail(
+  stockId VARCHAR(6),
+  productId VARCHAR(6),
+  FOREIGN KEY (productId) REFERENCES product (productId) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (stockId) REFERENCES stock (stockId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE supplier(
+  supplierId VARCHAR(8) PRIMARY KEY,
+  supplierName VARCHAR(20),
+  supplierContact VARCHAR(15),
+supplierAddress VARCHAR(50),
+  supplierNIC VARCHAR(15),
+description varchar(60)
+
+);
+
+CREATE TABLE supplierDetail(
+  supplierId VARCHAR(8),
+  stockId VARCHAR(6),
+  FOREIGN KEY (supplierId) REFERENCES supplier (supplierId) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (stockId) REFERENCES stock (stockId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE employeeSalary(
+  employeeId VARCHAR(6),
+  employeeSalary DECIMAL(8, 2),
+  description VARCHAR(50),
+  FOREIGN KEY (employeeId) REFERENCES employee (employeeId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE employeeAttendance(
+  employeeAttenId VARCHAR(5) PRIMARY KEY,
+  employeeId VARCHAR(6),
+  date DATE,
+  FOREIGN KEY (employeeId) REFERENCES employee (employeeId) ON UPDATE CASCADE ON DELETE CASCADE
+);

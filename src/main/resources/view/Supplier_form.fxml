@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="paneHolder" prefHeight="650.0" prefWidth="982.0" style="-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #a0ec70 0.0%, #a0ec70 0.6729%, #ffffff 100.0%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Greenery.Controller.SupplierFormController">
+   <children>
+      <ImageView fitHeight="576.0" fitWidth="982.0" layoutX="2.0" layoutY="73.0" opacity="0.5">
+         <image>
+            <Image url="@../asserts/download.jpeg" />
+         </image>
+      </ImageView>
+      <Text layoutX="88.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER FORM">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="34.0" layoutY="102.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="SupplierId" wrappingWidth="207.61523437499994">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtSupplierId" layoutX="36.0" layoutY="113.0" onAction="#supplierIdOnAction" onKeyReleased="#supplierIdOnKeyReleased" prefHeight="50.0" prefWidth="286.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <TextField fx:id="txtSupplierName" layoutX="355.0" layoutY="113.0" prefHeight="50.0" prefWidth="286.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <TextField fx:id="txtSupplierNIC" layoutX="32.0" layoutY="211.0" prefHeight="50.0" prefWidth="294.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <TextField fx:id="txtSupplierAddress" layoutX="362.0" layoutY="212.0" prefHeight="50.0" prefWidth="277.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <TextField fx:id="txtSupplierContact" layoutX="677.0" layoutY="113.0" prefHeight="50.0" prefWidth="252.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <Text layoutX="359.0" layoutY="101.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="SupplierName">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="41.0" layoutY="200.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="SupplierNIC">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="365.0" layoutY="205.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="SupllierAddress">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="683.0" layoutY="101.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="SupplerContact">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tableSupplier" layoutX="50.0" layoutY="363.0" opacity="0.74" prefHeight="251.0" prefWidth="857.0">
+        <columns>
+            <TableColumn fx:id="colSupId" prefWidth="133.5999755859375" text="supplierId" />
+          <TableColumn fx:id="colSupName" prefWidth="136.800048828125" text="supplierName" />
+          <TableColumn fx:id="colSupContact" prefWidth="129.5999755859375" text="supplierContact" />
+            <TableColumn fx:id="colSupAddress" prefWidth="146.39996337890625" text="supplierAddress" />
+            <TableColumn fx:id="colSupNIC" prefWidth="125.5999755859375" text="supplierNIC" />
+            <TableColumn fx:id="colDescription" prefWidth="177.60009765625" text="description" />
+        </columns>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.9148486256599426" green="0.9578947424888611" blue="0.8656530380249023" />
+               </color></DropShadow>
+         </effect>
+      </TableView>
+      <Text layoutX="688.0" layoutY="208.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtDescription" layoutX="679.0" layoutY="211.0" prefHeight="50.0" prefWidth="252.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <ImageView fitHeight="50.0" fitWidth="46.0" layoutX="30.0" layoutY="16.0">
+         <image>
+            <Image url="@../asserts/images__1_-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="20.0" fitWidth="23.0" layoutX="420.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../untitled1/src/main/resources/asserts/icon/update.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="20.0" fitWidth="23.0" layoutX="242.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../untitled1/src/main/resources/asserts/icon/delete.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="saveBtn" buttonType="RAISED" contentDisplay="RIGHT" layoutX="488.0" layoutY="281.0" onAction="#btnSaveOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: green; -fx-background-radius: 10;" text="Save">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="29.0">
+               <image>
+                  <Image url="@../asserts/WhatsApp_Image_2024-05-03_at_23.30.28_2acabb73-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <textFill>
+            <LinearGradient endX="0.1477272366032455" endY="0.4393939231381272" startX="0.15151514699964813">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.08888889104127884" green="0.4000000059604645" blue="0.2029629647731781" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.23149394347240915">
+                     <color>
+                        <Color red="0.09019608050584793" green="0.4000000059604645" blue="0.20392157137393951" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.9411764740943909" green="1.0" blue="0.9411764740943909" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </JFXButton>
+      <JFXButton fx:id="updateBtn" buttonType="RAISED" contentDisplay="RIGHT" layoutX="311.0" layoutY="282.0" onAction="#btnUpdateOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: orange; -fx-background-radius: 10;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="27.0" fitWidth="24.0">
+               <image>
+                  <Image url="@../asserts/icons8-update-64.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="deleteBtn" buttonType="RAISED" contentDisplay="RIGHT" layoutX="127.0" layoutY="281.0" onAction="#btnDeleteOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: RED; -fx-background-radius: 10;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@../asserts/icons8-delete-24.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="backBtn" buttonType="RAISED" contentDisplay="RIGHT" layoutX="661.0" layoutY="280.0" onAction="#btnBackOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: black; -fx-background-radius: 10;" text="Back" textFill="#e3f2e3">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="27.0" fitWidth="24.0">
+               <image>
+                  <Image url="@../asserts/icons8-back-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+   </children>
+</AnchorPane>

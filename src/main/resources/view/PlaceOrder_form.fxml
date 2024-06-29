@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="paneHolder" prefHeight="898.0" prefWidth="940.0" style="-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #a0ec70 0.0%, #a0ec70 0.6729%, #ffffff 100.0%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Greenery.Controller.PlaceOrderFormController">
+   <children>
+      <Text layoutX="126.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLACE ORDER FROM">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="92.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OrderId">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <Text layoutX="96.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OrderQty">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <Text layoutX="507.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UnitPrice">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <TextField fx:id="txtProductId" layoutX="85.0" layoutY="289.0" prefHeight="62.0" prefWidth="334.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <TextField fx:id="txtUnitPrice" layoutX="505.0" layoutY="286.0" prefHeight="62.0" prefWidth="334.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <TextField fx:id="txtQty" layoutX="87.0" layoutY="399.0" prefHeight="62.0" prefWidth="334.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <TextField fx:id="txtAmount" layoutX="514.0" layoutY="401.0" prefHeight="62.0" prefWidth="334.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <Text layoutX="508.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CustomerId">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="517.0" layoutY="393.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <Text layoutX="93.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProductId">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tablePlaceOrder" layoutX="57.0" layoutY="572.0" opacity="0.74" prefHeight="222.0" prefWidth="830.0">
+        <columns>
+          <TableColumn fx:id="colCustomerId" prefWidth="93.5999755859375" text="customerId" />
+            <TableColumn fx:id="colProductId" prefWidth="119.19998168945312" text="productId" />
+            <TableColumn fx:id="colUnitPrice" prefWidth="136.800048828125" text="unitPrice" />
+            <TableColumn fx:id="colQty" prefWidth="103.20001220703125" text="orderqty" />
+            <TableColumn fx:id="colAmount" prefWidth="130.39996337890625" text="amount" />
+          <TableColumn fx:id="colDescription" prefWidth="130.4000244140625" text="description" />
+            <TableColumn fx:id="colAction" prefWidth="113.59995117187498" text="Action" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btnAddToCart" layoutX="742.0" layoutY="66.0" onAction="#btnAddToCartOnAction" prefHeight="58.0" prefWidth="152.0" style="-fx-background-color: #ea3014; -fx-background-radius: 10;" text="Add To Cart" textFill="#282424">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="36.0">
+               <image>
+                  <Image url="@../../../../../../../Administrator/Downloads/images-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="btnPlaceOrder" buttonType="RAISED" layoutX="709.0" layoutY="821.0" onAction="#btnPlaceOrderOnAction" prefHeight="58.0" prefWidth="176.0" style="-fx-background-color: green; -fx-background-radius: 10;" text="Place Order" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../untitled1/src/main/resources/asserts/icon/make_order.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="568.0" layoutY="827.0" onAction="#btnBackOnAction" prefHeight="48.0" prefWidth="102.0" style="-fx-background-color: #bdc3c7; -fx-background-radius: 10;" text="Back">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label fx:id="lblNetTotal" layoutX="72.0" layoutY="840.0" text="Net Total:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Text layoutX="95.0" layoutY="494.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtDescription" layoutX="89.0" layoutY="503.0" prefHeight="62.0" prefWidth="334.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <JFXComboBox fx:id="cmbCusId" layoutX="503.0" layoutY="165.0" prefHeight="64.0" prefWidth="332.0" style="-fx-background-color: white; -fx-background-radius: 10;" />
+      <JFXComboBox fx:id="cmbOrderId" layoutX="78.0" layoutY="170.0" prefHeight="64.0" prefWidth="332.0" style="-fx-background-color: white; -fx-background-radius: 10;" />
+   </children>
+</AnchorPane>

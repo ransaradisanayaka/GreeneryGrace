@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="paneHolder" prefHeight="650.0" prefWidth="982.0" style="-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #a0ec70 0.0%, #a0ec70 0.6729%, #ffffff 100.0%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Greenery.Controller.PaymentFormController">
+   <children>
+      <Text layoutX="100.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PAYMENT FORM">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="577.0" fitWidth="983.0" layoutX="-1.0" layoutY="72.0" opacity="0.52">
+         <image>
+            <Image url="@../asserts/188604935.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="81.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PaymentId:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtPaymentId" layoutX="73.0" layoutY="149.0" onAction="#paymentIdOnAction" onKeyReleased="#paymentIdOnKeyReleased" prefHeight="50.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <TextField fx:id="txtAmount" layoutX="378.0" layoutY="146.0" prefHeight="50.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <TextField fx:id="txtPaymentMethod" layoutX="73.0" layoutY="244.0" prefHeight="50.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <TextField fx:id="txtDate" layoutX="378.0" layoutY="243.0" prefHeight="50.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-background-color: #f0fff0;" />
+      <Text layoutX="76.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PaymentMethod">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="380.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="378.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="699.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CustomerId">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+
+      <TableView fx:id="PaymentTable" layoutX="75.0" layoutY="396.0" opacity="0.57" prefHeight="226.0" prefWidth="850.0" style="-fx-background-color: #f0fff0;">
+        <columns>
+          <TableColumn fx:id="colPaymentId" prefWidth="188.8000259399414" text="paymentId" />
+          <TableColumn fx:id="colPaymentMethod" prefWidth="153.59994506835938" text="paymentMethod" />
+            <TableColumn fx:id="colAmount" prefWidth="133.60000610351562" text="amount" />
+            <TableColumn fx:id="colDate" minWidth="4.799957275390625" prefWidth="185.5999755859375" text="date" />
+            <TableColumn fx:id="colCustomerId" prefWidth="190.39996337890625" text="customerId" />
+        </columns>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.9789473414421082" green="0.9463157653808594" blue="0.9463157653808594" />
+               </color></DropShadow>
+         </effect>
+      </TableView>
+      <ComboBox fx:id="cmbCustomer" layoutX="698.0" layoutY="146.0" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #f0fff0; -fx-background-radius: 10;" />
+      <JFXButton fx:id="saveBtn" buttonType="RAISED" contentDisplay="RIGHT" layoutX="513.0" layoutY="315.0" onAction="#btnSaveOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: green; -fx-background-radius: 10;" text="Save">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="29.0">
+               <image>
+                  <Image url="@../asserts/WhatsApp_Image_2024-05-03_at_23.30.28_2acabb73-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <textFill>
+            <LinearGradient endX="0.1477272366032455" endY="0.4393939231381272" startX="0.15151514699964813">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.08888889104127884" green="0.4000000059604645" blue="0.2029629647731781" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.23149394347240915">
+                     <color>
+                        <Color red="0.09019608050584793" green="0.4000000059604645" blue="0.20392157137393951" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.9411764740943909" green="1.0" blue="0.9411764740943909" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </JFXButton>
+      <JFXButton fx:id="updateBtn" buttonType="RAISED" contentDisplay="RIGHT" layoutX="336.0" layoutY="316.0" onAction="#btnUpdateOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: orange; -fx-background-radius: 10;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="27.0" fitWidth="24.0">
+               <image>
+                  <Image url="@../asserts/icons8-update-64.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="deleteBtn" buttonType="RAISED" contentDisplay="RIGHT" layoutX="148.0" layoutY="315.0" onAction="#btnDeleteOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: RED; -fx-background-radius: 10;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@../asserts/icons8-delete-24.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="backBtn" buttonType="RAISED" contentDisplay="RIGHT" layoutX="694.0" layoutY="314.0" onAction="#btnBackOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: black; -fx-background-radius: 10;" text="Back" textFill="#e3f2e3">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="27.0" fitWidth="24.0">
+               <image>
+                  <Image url="@../asserts/icons8-back-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <ImageView layoutX="26.0" layoutY="16.0">
+         <image>
+            <Image url="@../asserts/icons8-payment-50.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
