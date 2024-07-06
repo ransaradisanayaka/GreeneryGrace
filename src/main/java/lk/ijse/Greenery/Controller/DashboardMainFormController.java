@@ -73,10 +73,14 @@ public class DashboardMainFormController {
 
     @FXML
     void btnCustomerOnAction(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/Customer_Form.fxml"));
-        Pane registePane = (Pane) fxmlLoader.load();
-        paneHolder.getChildren().clear();
-        paneHolder.getChildren().add(registePane);
+        AnchorPane anchorPane=  FXMLLoader.load(getClass().getResource("/view/Customer_Form.fxml"));
+        Stage stage=(Stage) this.rootNode.getScene().getWindow();
+        stage.setScene(new Scene(anchorPane));
+        stage.setTitle("CustomerForm");
+        stage.centerOnScreen();
+        //Pane registePane = (Pane) fxmlLoader.load();
+       // paneHolder.getChildren().clear();
+       // paneHolder.getChildren().add(registePane);
 
     }
 

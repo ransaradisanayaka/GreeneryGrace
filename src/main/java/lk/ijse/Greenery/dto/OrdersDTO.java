@@ -1,20 +1,21 @@
-package lk.ijse.Greenery.model;
+package lk.ijse.Greenery.dto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+public class OrdersDTO {
 
-public class PlaceOrder {
-
-    private String customerId;
-    private String productId;
-    private String unitPrice;
+    private String orderId;
     private String orderQty;
     private String amount;
     private String description;
+    private String customerId;
 
 
 }

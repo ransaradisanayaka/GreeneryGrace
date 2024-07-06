@@ -15,10 +15,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.Greenery.model.Product;
+import lk.ijse.Greenery.bo.BOFactory;
+import lk.ijse.Greenery.bo.ProductBO;
+import lk.ijse.Greenery.dto.ProductDTO;
+import lk.ijse.Greenery.model.ProductDTo;
 
 import lk.ijse.Greenery.model.Tm.ProductTm;
-import lk.ijse.Greenery.repository.EmployeeRepo;
 import lk.ijse.Greenery.repository.ProductRepo;
 
 
@@ -65,9 +67,11 @@ public class ProductFormController {
 
 
 
-    private List<Product> productList = new ArrayList<>();
-    public void initialize() {
-        this.productList = getAllProduct();
+    private List<ProductDTo> productList = new ArrayList<>();
+  ProductBO productBO= (ProductBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PRODUCT);
+
+    public void initialize() throws SQLException, ClassNotFoundException {
+    //    this.productList = getAllProduct();
         setCellDataFactory();
         loadAllProduct();
     }
@@ -80,11 +84,13 @@ public class ProductFormController {
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
     }
 
-    private void loadAllProduct() {
-        ObservableList<ProductTm> tmList = FXCollections.observableArrayList();
+    private void loadAllProduct() throws SQLException, ClassNotFoundException {
+     ProductTable.getItems().clear();
+     try {
+         ArrayList<ProductDTO> allProduct = productBO.getAllProduct();
 
-        for (Product product : productList) {
-            ProductTm productTm = new ProductTm(
+        for (ProductDTO product :allProduct) {
+            ProductTable.getItems().add(new ProductTm(
 
                     product.getProductId(),
                     product.getProductName(),
@@ -94,20 +100,20 @@ public class ProductFormController {
 
 
 
-            );
-            tmList.add(productTm);
+            ) );
+        }
+          }catch (SQLException e) {
+         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+
+     }
 
         }
 
-        ProductTable.setItems(tmList);
-        ProductTm selectedItem = ProductTable.getSelectionModel().getSelectedItem();
-        System.out.println("selectedItem = " + selectedItem);
 
 
-    }
 
-    private List<Product> getAllProduct() {
-        List<Product> productList  = null;
+  /*  private List<ProductDTo> getAllProduct() {
+        List<ProductDTo> productList  = null;
         try {
             productList  = ProductRepo.getAll();
         } catch (SQLException e) {
@@ -119,13 +125,14 @@ public class ProductFormController {
 
 
 
-
+*/
+    /*
     @FXML
     void productSearchOnAction(ActionEvent event) {
      String  productId = txtProductId.getText();
 
         try {
-            Product product= ProductRepo.searchById(productId);
+            ProductDTo product= ProductRepo.searchById(productId);
 
             if (product != null) {
                 txtProductId.setText(product.getProductId());
@@ -142,24 +149,24 @@ public class ProductFormController {
 
 
     }
-
+*/
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         String productId = txtProductId.getText();
 
         try {
-            boolean isDeleted = EmployeeRepo.delete(productId);
+            boolean isDeleted = productBO.deleteProduct(productId);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "deleted!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String productId = txtProductId.getText();
         String productName = txtProductName.getText();
         String qty =  txtQty.getText();
@@ -167,9 +174,10 @@ public class ProductFormController {
         String unitPrice= txtUnitPrice.getText();
 
 
-        Product product = new Product(productId,productName,qty, description, unitPrice);
-
-        try {
+        ProductDTO product = new ProductDTO(productId,productName,qty, description, unitPrice);
+productBO.saveProduct(product);
+ProductTable.getItems().add(new ProductTm(productId,productName,qty,description,unitPrice));
+       /*try {
             boolean isSaved = ProductRepo.save(product);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "saved!").show();
@@ -184,7 +192,7 @@ public class ProductFormController {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
-
+*/
     }
 
     @FXML
@@ -195,15 +203,17 @@ public class ProductFormController {
         String description= txtDescription.getText();
         String unitPrice=txtUnitPrice.getText();
 
-        Product product= new Product(productId,productName,qty, description, unitPrice);
+        ProductDTO product= new ProductDTO(productId,productName,qty, description, unitPrice);
 
         try {
-            boolean isUpdated = ProductRepo.update(product);
+            boolean isUpdated = productBO.updateProduct(product);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, " updated!").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
     private void addError(TextField textField) {

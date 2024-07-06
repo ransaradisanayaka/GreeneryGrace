@@ -12,7 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.Greenery.db.DbConnection;
-import lk.ijse.Greenery.model.User;
+import lk.ijse.Greenery.model.UserDTo;
 import lk.ijse.Greenery.repository.UserRepo;
 import java.io.IOException;
 import java.sql.Connection;
@@ -56,7 +56,7 @@ public class LoginFormController {
            // Reset border color if both fields are filled
            txtUserName.setStyle("-fx-border-color: green;");
            txtPassword.setStyle("-fx-border-color: green;");
-           User user = UserRepo.setLoginOnDetail(userName);
+           UserDTo user = UserRepo.setLoginOnDetail(userName);
            if (user != null) {
                if (user.getPassWord().equals(password)) {
                    navigateDashboard();

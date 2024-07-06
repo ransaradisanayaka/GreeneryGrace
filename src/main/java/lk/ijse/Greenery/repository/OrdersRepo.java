@@ -2,7 +2,7 @@ package lk.ijse.Greenery.repository;
 
 import lk.ijse.Greenery.db.DbConnection;
 
-import lk.ijse.Greenery.model.Orders;
+import lk.ijse.Greenery.model.OrdersDTo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ public class OrdersRepo {
     public static Object orderId;
 
 
-    public static List<Orders> getAll() throws SQLException {
+    public static List<OrdersDTo> getAll() throws SQLException {
         String sql = "SELECT * FROM orders";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -23,7 +23,7 @@ public class OrdersRepo {
 
         ResultSet resultSet = pstm.executeQuery();
 
-        List<Orders> orderList = new ArrayList<>();
+        List<OrdersDTo> orderList = new ArrayList<>();
         while (resultSet.next()) {
             String orderId = resultSet.getString(1);
             String orderQty = resultSet.getString(2);
@@ -32,28 +32,16 @@ public class OrdersRepo {
             String customerId= resultSet.getString(5);
 
 
-            Orders orders = new Orders(orderId, orderQty, amount, description,customerId);
+            OrdersDTo orders = new OrdersDTo(orderId, orderQty, amount, description,customerId);
             orderList.add(orders);
         }
         return orderList;
     }
-    public static boolean delete(String orderId) throws SQLException {
-        String sql = "DELETE FROM orders WHERE orderId=?";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setObject(1, orderId);
-
-        return pstm.executeUpdate() > 0;
-
-    }
 
 
 
 
-
-    public static Orders searchById (String orderId) throws SQLException {
+    public static OrdersDTo searchById (String orderId) throws SQLException {
         String sql = "SELECT * FROM orders WHERE orderId=?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -62,7 +50,7 @@ public class OrdersRepo {
         pstm.setObject(1, orderId);
         ResultSet resultSet = pstm.executeQuery();
 
-        Orders orders = null;
+        OrdersDTo orders = null;
 
 
         if (resultSet.next()) {
@@ -74,12 +62,12 @@ public class OrdersRepo {
 
 
 
-           orders= new Orders(Id, orderQty,amount,description,customerId );
+           orders= new OrdersDTo(Id, orderQty,amount,description,customerId );
         }
         return orders;
     }
 
-    public static boolean save(Orders orders) throws SQLException {
+    public static boolean save(OrdersDTo orders) throws SQLException {
         String sql = "INSERT INTO orders VALUES(?, ?, ?, ?,?)";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -96,7 +84,7 @@ public class OrdersRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static boolean update(Orders orders) throws SQLException {
+    public static boolean update(OrdersDTo orders) throws SQLException {
         String sql = "UPDATE orders SET orderQty=?, amount=? ,description=?,customerId=? WHERE orderId=?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -113,7 +101,7 @@ public class OrdersRepo {
 
         return pstm.executeUpdate() > 0;
     }
-    public static boolean saveOrder(Orders orders) throws SQLException {
+    public static boolean saveOrder(OrdersDTo orders) throws SQLException {
         String sql = "INSERT INTO orders VALUES(?, ?, ?,?,?)";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);

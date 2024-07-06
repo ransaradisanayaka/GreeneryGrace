@@ -50,9 +50,9 @@
       <TableView fx:id="customerTable" layoutX="44.0" layoutY="365.0" opacity="0.57" prefHeight="255.0" prefWidth="896.0" style="-fx-background-color: #f0fff0;">
         <columns>
           <TableColumn fx:id="customerIdColumn" prefWidth="219.7333106994629" text="customerId" />
-          <TableColumn fx:id="customerNameColmun" minWidth="0.0" prefWidth="256.00006103515625" text="customerName" />
-            <TableColumn fx:id="customerAddressColmun" prefWidth="239.199951171875" text="customerAddress" />
-            <TableColumn fx:id="customerContactColmun" minWidth="0.0" prefWidth="184.800048828125" text="customerContact" />
+          <TableColumn fx:id="customerNameColumn" minWidth="0.0" prefWidth="256.00006103515625" text="customerName" />
+            <TableColumn fx:id="customerAddressColumn" prefWidth="239.199951171875" text="customerAddress" />
+            <TableColumn fx:id="customerContactColumn" minWidth="0.0" prefWidth="184.800048828125" text="customerContact" />
         </columns>
          <effect>
             <DropShadow>

@@ -1,4 +1,4 @@
-package lk.ijse.Greenery.model;
+package lk.ijse.Greenery.dto;
 
 
     import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
     @AllArgsConstructor
     @Data
 
-    public class Employee {
+    public class EmployeeDTO {
 
         private String EmployeeId;
         private String EmployeeName;

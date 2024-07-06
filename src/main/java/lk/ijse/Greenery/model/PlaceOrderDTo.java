@@ -1,5 +1,4 @@
 package lk.ijse.Greenery.model;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,18 +7,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 
-
-public class Customer {
-
+public class PlaceOrderDTo {
 
     private String customerId;
-    private String customerName;
-    private String customerAddress;
-    private String customerContact;
-
+    private String productId;
+    private String unitPrice;
+    private String orderQty;
+    private String amount;
+    private String description;
 
 
 }
-
-
-

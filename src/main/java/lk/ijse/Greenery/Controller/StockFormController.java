@@ -15,7 +15,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.Greenery.model.Stock;
+import lk.ijse.Greenery.bo.BOFactory;
+import lk.ijse.Greenery.bo.StockBO;
+import lk.ijse.Greenery.dto.StockDTO;
+import lk.ijse.Greenery.model.StockDTo;
 import lk.ijse.Greenery.model.Tm.StockTm;
 import lk.ijse.Greenery.repository.StockRepo;
 
@@ -58,34 +61,30 @@ public class StockFormController {
     private TextField txtType;
 
 
-    private List<Stock> stockList = new ArrayList<>();
+    private List<StockDTo> stockList = new ArrayList<>();
 
-    public void initialize() {
-        this.stockList = getAllStock();
+   StockBO stockBO= (StockBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.STOCK);
+
+    public void initialize() throws SQLException, ClassNotFoundException {
+    //    this.stockList = getAllStock();
         setCellDataFactory();
         loadAllStock();
     }
 
-    private void loadAllStock() {
-        ObservableList<StockTm> tmList = FXCollections.observableArrayList();
+    private void loadAllStock() throws SQLException, ClassNotFoundException {
+        tableStock.getItems().clear();
+        ArrayList<StockDTO> allStock = stockBO.getAllStock();
 
-        for (Stock stock : stockList) {
-         StockTm stockTm = new StockTm(
-                   stock.getStockId(),
+        for (StockDTO stock : allStock) {
+            tableStock.getItems().add(new StockTm(
+                    stock.getStockId(),
                     stock.getName(),
                     stock.getQtyOnHand(),
                     stock.getType()
 
 
-            );
-            tmList.add(stockTm);
-
+            ));
         }
-
-        tableStock.setItems(tmList);
-        StockTm selectedItem = (StockTm) tableStock.getSelectionModel().getSelectedItem();
-        System.out.println("selectedItem = " + selectedItem);
-
     }
 
     private void setCellDataFactory() {
@@ -97,8 +96,8 @@ public class StockFormController {
     }
 
 
-    private List<Stock> getAllStock() {
-        List<Stock> stockList = null;
+ /*   private List<StockDTo> getAllStock() {
+        List<StockDTo> stockList = null;
         try {
             stockList = StockRepo.getAll();
         } catch (SQLException e) {
@@ -107,17 +106,17 @@ public class StockFormController {
         return stockList;
     }
 
-
+*/
 
 
 
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
+    void btnDeleteOnAction(ActionEvent event) throws ClassNotFoundException {
         String stockId = txtStockId.getText();
 
         try {
-            boolean isDeleted = StockRepo.delete(stockId);
+            boolean isDeleted = stockBO.deleteStock(stockId);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "deleted!").show();
             }
@@ -127,7 +126,7 @@ public class StockFormController {
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String stockId = txtStockId.getText();
         String name = txtName.getText();
         String qtyOnHand =  txtQtyOnHand.getText();
@@ -135,9 +134,10 @@ public class StockFormController {
 
 
 
-        Stock stock = new Stock(stockId,name,qtyOnHand, type);
-
-        try {
+        StockDTO stock = new StockDTO(stockId,name,qtyOnHand, type);
+stockBO.saveStock(stock);
+tableStock.getItems().add(new StockTm(stockId,name,qtyOnHand,type));
+   /*     try {
             boolean isSaved = StockRepo.save(stock);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "saved!").show();
@@ -150,21 +150,21 @@ public class StockFormController {
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
+        }*/
 
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
+    void btnUpdateOnAction(ActionEvent event) throws ClassNotFoundException {
         String stockId = txtStockId.getText();
         String name = txtName.getText();
         String qtyOnHand =  txtQtyOnHand.getText();
         String type = txtType.getText();
 
-        Stock stock= new Stock(stockId,name,qtyOnHand, type);
+        StockDTO stock= new StockDTO(stockId,name,qtyOnHand, type);
 
         try {
-            boolean isUpdated = StockRepo.update(stock);
+            boolean isUpdated = stockBO.updateStock(stock);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, " updated!").show();
             }

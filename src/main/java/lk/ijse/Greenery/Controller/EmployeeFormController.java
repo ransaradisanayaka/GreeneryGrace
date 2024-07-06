@@ -1,7 +1,5 @@
 package lk.ijse.Greenery.Controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +12,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.Greenery.model.Employee;
+import lk.ijse.Greenery.bo.BOFactory;
+import lk.ijse.Greenery.bo.EmployeeBo;
+import lk.ijse.Greenery.model.EmployeeDTo;
 import lk.ijse.Greenery.model.Tm.EmployeeTm;
-import lk.ijse.Greenery.repository.EmployeeRepo;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -64,20 +64,21 @@ public class EmployeeFormController {
 
     @FXML
     private TextField txtEmployeeName;
-    private List<Employee> employeeList = new ArrayList<Employee>();
+    private List<EmployeeDTo> employeeList = new ArrayList<EmployeeDTo>();
 
-
+EmployeeBo employeeBo= (EmployeeBo) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
     public void initialize() {
-        this.employeeList = getAllEmployee();
+      //  this.employeeList = getAllEmployee();
         setCellDataFactory();
-        loadAllCustomer();
+        loadAllEmployee();
     }
 
-    private void loadAllCustomer() {
-        ObservableList<EmployeeTm> tmList = FXCollections.observableArrayList();
-
-        for (Employee employee : employeeList) {
-            EmployeeTm employeeTm = new EmployeeTm(
+    private void loadAllEmployee() {
+     empTable.getItems().clear();
+     try {
+         ArrayList<lk.ijse.Greenery.dto.EmployeeDTO> allEmployee = employeeBo.getAllEmployee();
+        for (lk.ijse.Greenery.dto.EmployeeDTO employee : allEmployee) {
+           empTable.getItems().add(new EmployeeTm(
 
                     employee.getEmployeeId(),
                     employee.getEmployeeName(),
@@ -87,22 +88,20 @@ public class EmployeeFormController {
                     employee.getEmployeeNIC()
 
 
-            );
-            tmList.add(employeeTm);
+            ));}
+         //   tmList.add(employeeTm);
 
-        }
-
-        empTable.setItems(tmList);
-        EmployeeTm selectedItem = empTable.getSelectionModel().getSelectedItem();
-        System.out.println("selectedItem = " + selectedItem);
-
-
+        } catch (SQLException e) {
+         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+     } catch (ClassNotFoundException e) {
+         e.printStackTrace();
+     }
     }
 
 
 
-    private java.util.List<Employee> getAllEmployee() {
-        java.util.List<Employee> employeeList  = null;
+  /*  private java.util.List<EmployeeDTO> getAllEmployee() {
+        java.util.List<EmployeeDTO> employeeList  = null;
         try {
             employeeList  = EmployeeRepo.getAll();
         } catch (SQLException e) {
@@ -111,7 +110,8 @@ public class EmployeeFormController {
         return employeeList;
     }
 
-    private void setCellDataFactory() {
+   */
+  private void setCellDataFactory() {
         EmployeeIdColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         EmployeeNameColumn.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
         EmployeeAddressColumn.setCellValueFactory(new PropertyValueFactory<>("employeeAddress"));
@@ -142,17 +142,19 @@ public class EmployeeFormController {
         String employeeId = txtEmployeeId.getText();
 
         try {
-            boolean isDeleted = EmployeeRepo.delete(employeeId);
+            boolean isDeleted = employeeBo.deleteEmployee(employeeId);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "deleted!").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @FXML
-    public void btnSaveOnAction(ActionEvent actionEvent) {
+    public void btnSaveOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String employeeId = txtEmployeeId.getText();
         String employeeName = txtEmployeeName.getText();
         String employeeAddress =  txtEmployeeAddress.getText();
@@ -161,9 +163,11 @@ public class EmployeeFormController {
         String employeeNIC = txtEmployeeNIC.getText();
 
 
-        Employee employee = new Employee(employeeId,employeeName,employeeAddress,employeeContact,description,employeeNIC);
+      //  Employee employee = new Employee(employeeId,employeeName,employeeAddress,employeeContact,description,employeeNIC);
 
-        try {
+       employeeBo.saveEmployee(new lk.ijse.Greenery.dto.EmployeeDTO(employeeId,employeeName,employeeAddress,employeeContact,description,employeeNIC));
+       empTable.getItems().add(new EmployeeTm(employeeId,employeeName,employeeAddress,employeeContact,description,employeeNIC));
+       /*try {
             boolean isSaved = EmployeeRepo.save(employee);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "saved!").show();
@@ -176,7 +180,7 @@ public class EmployeeFormController {
             txtEmployeeNIC.setText("");
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
+        }*/
 
 
     }
@@ -190,19 +194,22 @@ public class EmployeeFormController {
         String employeeNIC = txtEmployeeNIC.getText();
 
 
-        Employee employee = new Employee(employeeId,employeeName,employeeAddress,employeeContact,description,employeeNIC);
+        EmployeeDTo employee = new EmployeeDTo(employeeId,employeeName,employeeAddress,employeeContact,description,employeeNIC);
         try {
-            boolean isUpdated = EmployeeRepo.update(employee);
+            boolean isUpdated = employeeBo.updateEmployee(new lk.ijse.Greenery.dto.EmployeeDTO( employeeId,employeeName,employeeAddress,employeeContact,description,employeeNIC));
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, " updated!").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+
         }
 
     }
 
-    public void employeeSearchOnAction(ActionEvent actionEvent) {
+    /*public void employeeSearchOnAction(ActionEvent actionEvent) {
 
             String  employeeId = txtEmployeeId.getText();
 
@@ -223,7 +230,7 @@ public class EmployeeFormController {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
    }
 
-    }
+    }*/
     private void addError(TextField textField) {
         textField.setStyle("-fx-border-color: red;  -fx-background-radius: 5; -fx-background-radius: 5");
     }

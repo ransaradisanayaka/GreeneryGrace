@@ -1,6 +1,6 @@
-package lk.ijse.Greenery.model;
+package lk.ijse.Greenery.dto;
 
-public class OrderDetail {
+public class OrderDetailDTO {
     private String orderId;
     private String productId;
 

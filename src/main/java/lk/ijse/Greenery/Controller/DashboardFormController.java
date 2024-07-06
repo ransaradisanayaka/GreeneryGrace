@@ -8,6 +8,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.Greenery.dao.custom.CustomerDAO;
 import lk.ijse.Greenery.db.DbConnection;
 import lk.ijse.Greenery.repository.CustomerRepo;
 import lk.ijse.Greenery.repository.OrdersRepo;
@@ -41,9 +42,9 @@ public class DashboardFormController {
 
 
     private void getDailyCustomerCount() throws SQLException {
-        CustomerRepo customerRepo = new CustomerRepo();
-        int count = customerRepo.countDailyCustomer();
-        lblCustomerCount.setText(String.valueOf("0" + count));
+       // CustomerDAO customerDAO = new CustomerDAO();
+        //int count = customerDAO.countDailyCustomer();
+       // lblCustomerCount.setText(String.valueOf("0" + count));
 
     }
 

@@ -14,12 +14,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.stage.Stage;
-import lk.ijse.Greenery.model.Customer;
-import lk.ijse.Greenery.model.Orders;
+import lk.ijse.Greenery.model.CustomerDTo;
+import lk.ijse.Greenery.model.OrdersDTo;
 
 import lk.ijse.Greenery.model.Tm.OrderTm;
 
-import lk.ijse.Greenery.repository.CustomerRepo;
 import lk.ijse.Greenery.repository.OrdersRepo;
 
 import java.io.IOException;
@@ -68,17 +67,17 @@ public class OrderFormController {
     private JFXTextField txtOrderQty;
     @FXML
     private ComboBox<String> cmbCustomer;
-    private List<Orders> orderList = new ArrayList<>();
+    private List<OrdersDTo> orderList = new ArrayList<>();
 
 
     public void initialize() {
         this.orderList = getAllOrder();
         setCellDataFactory();
         loadAllOrder();
-        getCustomerId();
+      //  getCustomerId();
     }
 
-    private void getCustomerId() {
+    /*private void getCustomerId() {
 
             ObservableList<String> obList = FXCollections.observableArrayList();
             try {
@@ -95,10 +94,10 @@ public class OrderFormController {
             }
         }
 
+*/
 
-
-    private List<Orders> getAllOrder() {
-        List<Orders> orderList  ;
+    private List<OrdersDTo> getAllOrder() {
+        List<OrdersDTo> orderList  ;
         try {
             orderList  = OrdersRepo.getAll();
         } catch (SQLException e) {
@@ -122,7 +121,7 @@ public class OrderFormController {
     private void loadAllOrder() {
         ObservableList<OrderTm> tmList = FXCollections.observableArrayList();
 
-        for (Orders orders : orderList) {
+        for (OrdersDTo orders : orderList) {
             OrderTm orderTm = new OrderTm(
 
                     orders.getOrderId(),
@@ -145,21 +144,20 @@ public class OrderFormController {
     }
 
       @FXML
-    public void btnDeleteOnAction(javafx.event.ActionEvent actionEvent) {
+  /*  public void btnDeleteOnAction(javafx.event.ActionEvent actionEvent) {
 
 
         String orderId = txtOrderId.getText();
 
         try {
-            boolean isDeleted =OrdersRepo.delete(orderId);
-            if (isDeleted) {
+           boolean isDeleted =OrdersRepo.delete(orderId);if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "deleted!").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
-
+*/
     public void btnSaveOnAction(ActionEvent actionEvent) {
         String orderId = txtOrderId.getText();
         String orderQty = txtOrderQty.getText();
@@ -208,13 +206,13 @@ public class OrderFormController {
             alert.setContentText("Please fill in all fields.");
             alert.show();
         }
-        Customer customer = new Customer(orderId, orderQty, amount, description);
+        CustomerDTo customer = new CustomerDTo(orderId, orderQty, amount, description);
 
-        try {
+       /* try {
             boolean isSaved = CustomerRepo.save(customer);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "saved!").show();
-            }
+           }
 
            txtOrderId.setText("");
             txtOrderQty.setText("");
@@ -224,7 +222,7 @@ public class OrderFormController {
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
+        }*/
 
     }
 
@@ -236,7 +234,7 @@ public class OrderFormController {
         String description = txtDescription.getText();
         String customerId = cmbCustomer.getValue();
 
-        Orders orders = new Orders(orderId,orderQty,amount,description,customerId);
+        OrdersDTo orders = new OrdersDTo(orderId,orderQty,amount,description,customerId);
         try {
             boolean isUpdated = OrdersRepo.update(orders);
             if (isUpdated) {
@@ -280,7 +278,7 @@ public class OrderFormController {
     public void orderIdOnAction(ActionEvent actionEvent) throws SQLException {
         String  orderId = txtOrderId.getText();
 
-        Orders orders = OrdersRepo.searchById( orderId);
+        OrdersDTo orders = OrdersRepo.searchById( orderId);
 
         if (orders != null) {
            txtOrderId.setText(orders.getOrderId());

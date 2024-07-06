@@ -1,8 +1,6 @@
 package lk.ijse.Greenery.Controller;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +13,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.Greenery.model.Supplier;
+import lk.ijse.Greenery.bo.BOFactory;
+import lk.ijse.Greenery.bo.SupplierBO;
+import lk.ijse.Greenery.dto.SupplierDTO;
+import lk.ijse.Greenery.model.SupplierDTo;
 import lk.ijse.Greenery.model.Tm.SupplierTm;
-import lk.ijse.Greenery.repository.SupplierRepo;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -82,16 +82,23 @@ public class SupplierFormController {
     private AnchorPane paneHolder;
 
 
-    private List<Supplier> supplierList = new ArrayList<>();
-
-    public void initialize() {
-        this.supplierList = getAllSupplier();
+    private List<SupplierDTo> supplierList = new ArrayList<>();
+SupplierBO supplierBO= (SupplierBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.SUPPLIER);
+    public void initialize() throws SQLException, ClassNotFoundException {
+      //  this.supplierBO = getAllSupplier();
         setCellDataFactory();
         loadAllSupplier();
     }
 
-    private void loadAllSupplier() {
-        ObservableList<SupplierTm> tmList = FXCollections.observableArrayList();
+    private void loadAllSupplier() throws SQLException, ClassNotFoundException {
+        tableSupplier.getItems().clear();
+        /*Get all items*/
+        ArrayList<SupplierDTO> allSupplier = supplierBO.getAllSupplier();
+        for (SupplierDTO s : allSupplier) {
+            tableSupplier.getItems().add(new SupplierTm(s.getSupplierId(), s.getSupplierName(),s.getSupplerContact(),s.getSupplierAddress(),s.getDescription(),s.getSupplierNIC()));
+        }
+    }
+       /* ObservableList<SupplierTm> tmList = FXCollections.observableArrayList();
 
         for (Supplier supplier : supplierList) {
             SupplierTm supplierTm = new SupplierTm(
@@ -111,7 +118,7 @@ public class SupplierFormController {
         SupplierTm selectedItem = (SupplierTm) tableSupplier.getSelectionModel().getSelectedItem();
         System.out.println("selectedItem = " + selectedItem);
     }
-
+*/
     private void setCellDataFactory() {
         colSupId.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
         colSupName.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
@@ -121,7 +128,7 @@ public class SupplierFormController {
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
     }
 
-    private List getAllSupplier() {
+ /*   private List getAllSupplier() {
 
         List<Supplier> supplierList = null;
         try {
@@ -132,11 +139,11 @@ public class SupplierFormController {
         return supplierList;
 
 
-    }
+    }*/
 
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String supplierId   = txtSupplierId.getText();
         String supplierName = txtSupplierName.getText();
         String supplierContact = txtSupplierContact.getText();
@@ -144,10 +151,11 @@ public class SupplierFormController {
         String supplierNIC = txtSupplierNIC.getText();
         String description = txtDescription.getText();
 
-        Supplier supplier = new Supplier(supplierId, supplierName, supplierContact, supplierAddress, supplierNIC, description);
-
-        try {
-            boolean isSaved = SupplierRepo.save(supplier);
+        SupplierDTO supplier = new SupplierDTO(supplierId, supplierName, supplierContact, supplierAddress, supplierNIC, description);
+supplierBO.saveSupplier(supplier);
+tableSupplier.getItems().add(new SupplierTm(supplierId,supplierName,supplierContact,supplierAddress,supplierNIC,description));
+      /*  try {
+            boolean isSaved = SupplierRepo.saveSupplier(supplier);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "saved!").show();
             }
@@ -160,15 +168,15 @@ public class SupplierFormController {
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
+        }*/
     }
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
+    void btnDeleteOnAction(ActionEvent event) throws ClassNotFoundException {
         String supplierId = txtSupplierId.getText();
 
         try {
-            boolean isDeleted = SupplierRepo.delete(supplierId);
+            boolean isDeleted = supplierBO.deleteSupplier(supplierId);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "deleted!").show();
             }
@@ -178,7 +186,7 @@ public class SupplierFormController {
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
+    void btnUpdateOnAction(ActionEvent event) throws ClassNotFoundException {
         String supplierId= txtSupplierId.getText();
         String supplierName = txtSupplierName.getText();
         String supplierContact = txtSupplierContact.getText();
@@ -187,10 +195,10 @@ public class SupplierFormController {
         String description = txtDescription.getText();
 
 
-        Supplier supplier = new Supplier(supplierId, supplierName, supplierContact, supplierAddress, supplierNIC, description);
+        SupplierDTO supplier = new SupplierDTO(supplierId, supplierName, supplierContact, supplierAddress, supplierNIC, description);
 
         try {
-            boolean isUpdated = SupplierRepo.update(supplier);
+            boolean isUpdated = supplierBO.updateSupplier(supplier);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, " updated!").show();
             }
@@ -231,10 +239,10 @@ public class SupplierFormController {
 
     }
 
-    public void supplierIdOnAction(ActionEvent actionEvent) throws SQLException {
+   /* public void supplierIdOnAction(ActionEvent actionEvent) throws SQLException {
         String supplierId = txtSupplierId.getText();
 
-        Supplier supplier = SupplierRepo.searchById(supplierId);
+       // Supplier supplier = SupplierRepo.searchById(supplierId);
 
         if (supplier != null) {
             txtSupplierId.setText(supplier.getSupplierId());
@@ -246,5 +254,5 @@ public class SupplierFormController {
         }
 
 
-    }
+    }*/
 }

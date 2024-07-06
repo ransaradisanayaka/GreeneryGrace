@@ -1,4 +1,4 @@
-package lk.ijse.Greenery.model;
+package lk.ijse.Greenery.dto;
 
 
 
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
     @AllArgsConstructor
     @Data
 
-    public class Payment {
+    public class PaymentDTO {
 
         private String paymentId;
         private String paymentMethod;

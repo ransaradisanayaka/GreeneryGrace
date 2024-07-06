@@ -1,8 +1,6 @@
 package lk.ijse.Greenery.Controller;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,30 +13,29 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.Greenery.model.Customer;
+import lk.ijse.Greenery.bo.BOFactory;
+import lk.ijse.Greenery.bo.CustomerBO;
+import lk.ijse.Greenery.dto.CustomerDTO;
 import lk.ijse.Greenery.model.Tm.CustomerTm;
-import lk.ijse.Greenery.repository.CustomerRepo;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class CustomerFormController {
 
 
     @FXML
-    private TableColumn<?, ?> customerAddressColmun;
+    private TableColumn<?, ?> customerAddressColumn;
 
     @FXML
-    private TableColumn<?, ?> customerContactColmun;
+    private TableColumn<?, ?> customerContactColumn;
 
     @FXML
     private TableColumn<?, ?> customerIdColumn;
 
     @FXML
-    private TableColumn<?, ?> customerNameColmun;
+    private TableColumn<?, ?> customerNameColumn;
 
     @FXML
     private TableView<CustomerTm> customerTable;
@@ -67,58 +64,65 @@ public class CustomerFormController {
     @FXML
     private JFXButton updateBtn;
 
-    private List<Customer> customerList = new ArrayList<>();
+  //  private List<Customer> customerList = new ArrayList<>();
+    CustomerBO customerBO  = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
 
-    public void initialize() throws SQLException {
-        this.customerList = getAllCustomer();
+    public void initialize() throws SQLException, ClassNotFoundException {
+      //  this.customerList = getAllCustomer();
         setCellDataFactory();
         loadAllCustomer();
 
     }
 
-    private void loadAllCustomer() {
-        ObservableList<CustomerTm> tmList = FXCollections.observableArrayList();
+    public void loadAllCustomer() throws SQLException, ClassNotFoundException {
+        customerTable.getItems().clear();
 
-        for (Customer customer : customerList) {
-            CustomerTm customerTm = new CustomerTm(
+try {
 
-                    customer.getCustomerId(),
-                    customer.getCustomerName(),
-                    customer.getCustomerAddress(),
-                    customer.getCustomerContact()
+    ArrayList<CustomerDTO> allCustomer = customerBO.getAllCustomer();
 
-            );
-            tmList.add(customerTm);
+    for (CustomerDTO customer : allCustomer) {
+        customerTable.getItems().add(new CustomerTm(
 
+                customer.getCustomerId(),
+                customer.getCustomerName(),
+                customer.getCustomerAddress(),
+                customer.getCustomerContact())
 
-        }
+        );}
 
+} catch (SQLException e) {
+    throw new RuntimeException(e);
+} catch (ClassNotFoundException e) {
+    throw new RuntimeException(e);
+}
+        /*
         customerTable.setItems(tmList);
         CustomerTm selectedItem = customerTable.getSelectionModel().getSelectedItem();
         System.out.println("selectedItem = " + selectedItem);
-
+*/
 
     }
 
-    private void setCellDataFactory() {
+    public void setCellDataFactory() {
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        customerNameColmun.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        customerAddressColmun.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
-        customerContactColmun.setCellValueFactory(new PropertyValueFactory<>("customerContact"));
+        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
+        customerContactColumn.setCellValueFactory(new PropertyValueFactory<>("customerContact"));
 
 
     }
 
-    private List<Customer> getAllCustomer() throws SQLException {
+   /* public List<Customer> getAllCustomer() throws SQLException {
         List<lk.ijse.Greenery.model.Customer> customerList = null;
         customerList = CustomerRepo.getAll();
         return customerList;
 
 
     }
-
+*/
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String customerId = txtCustomerId.getText();
         String customerName = txtCustomerName.getText();
         String customerAddress = txtCustomerAddress.getText();
@@ -166,10 +170,13 @@ public class CustomerFormController {
             alert.setContentText("Please fill in all fields.");
             alert.show();
         }
-        Customer customer = new Customer(customerId, customerName, customerAddress, customerContact);
+        CustomerDTO customer = new CustomerDTO(customerId, customerName, customerAddress, customerContact);
 
-        try {
-            boolean isSaved = CustomerRepo.save(customer);
+customerBO.saveCustomer(customer);
+  customerTable.getItems().add(new CustomerTm(customerId,customerName,customerAddress,customerContact));
+
+
+  /*try {       boolean isSaved = customerBOsaveCustomer(customer);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "saved!").show();
             }
@@ -184,7 +191,7 @@ public class CustomerFormController {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
-
+*/
 
 }
 
@@ -197,43 +204,45 @@ public class CustomerFormController {
             String customerAddress = txtCustomerAddress.getText();
             String customerContact  = txtCustomerContact.getText();
 
-            Customer customer = new Customer(customerId, customerName, customerAddress, customerContact );
+           CustomerDTO customer = new CustomerDTO(customerId, customerName, customerAddress, customerContact );
+
 
             try {
-                boolean isUpdated = CustomerRepo.update(customer);
-                if (isUpdated) {
+                boolean isUpdated = customerBO.updateCustomer(customer);
+
+                if (!isUpdated) {
                     new Alert(Alert.AlertType.CONFIRMATION, "customer updated!").show();
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-        }
+         }
 
 
 
-
-
-
-    public void btnDeleteOnAction(ActionEvent actionEvent) {
+         public void btnDeleteOnAction(ActionEvent actionEvent) {
         String customerId = txtCustomerId.getText();
 
         try {
-            boolean isDeleted = CustomerRepo.delete(customerId);
+            boolean isDeleted = customerBO.deleteCustomer(customerId);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "deleted!").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
 
 
 
-    public void customerIdOnAction(ActionEvent actionEvent) throws SQLException {
+   /* public void customerIdOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String  customerId = txtCustomerId.getText();
 
-        Customer customer = CustomerRepo.searchById( customerId);
+       // lk.ijse.Greenery.entity.Customer customer =     customerBO.searchById();
+
 
         if (customer != null) {
             txtCustomerId.setText(customer.getCustomerId());
@@ -244,9 +253,7 @@ public class CustomerFormController {
 
         }
 
-
-
-    }
+    }*/
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/Dashboardmain_form.fxml"));
