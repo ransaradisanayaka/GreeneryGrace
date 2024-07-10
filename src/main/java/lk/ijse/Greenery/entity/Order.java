@@ -1,12 +1,15 @@
 package lk.ijse.Greenery.entity;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 public class Order {
     private String orderId;
     private String orderQty;
     private String amount;
     private String description;
     private String customerId;
-    public Order(){
+    public Order(String orderId, LocalDate orderDate, String customerId, String customerName, BigDecimal orderTotal){
 
     }
     public Order(String orderId,String orderQty,String amount,String description,String customerId){

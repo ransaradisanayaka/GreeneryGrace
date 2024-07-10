@@ -62,6 +62,12 @@ public class CustomerDAOImpl implements SuperDAO {
     }
 
 
+    public boolean exist(String customerId) throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.execute("SELECT customerId FROM customer WHERE customerId=?", customerId);
+        return rst.next();
+    }
+
+
     public static List<String> getCustomerId() {
         return null;
     }

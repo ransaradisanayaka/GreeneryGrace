@@ -2,6 +2,7 @@ package lk.ijse.Greenery.dao.custom.impl;
 
 
 import lk.ijse.Greenery.dao.SQLUtil;
+import lk.ijse.Greenery.dao.SuperDAO;
 import lk.ijse.Greenery.dao.custom.StockDAO;
 import lk.ijse.Greenery.db.DbConnection;
 import lk.ijse.Greenery.dto.StockDTO;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StockDAOImpl implements StockDAO {
+public class StockDAOImpl implements SuperDAO {
     public ArrayList<Stock> getAll() throws SQLException, ClassNotFoundException {
         ArrayList<Stock> allStock = new ArrayList<>();
 
@@ -30,9 +31,9 @@ public class StockDAOImpl implements StockDAO {
 
     }
 
-    public static List<String> getLowStockName() throws  SQLException{
-        String SQL="select name from stock where qtyOnHand<=20";
-        Connection connection= DbConnection.getInstance().getConnection();
+    public static List<String> getLowStockName() throws SQLException, ClassNotFoundException {
+     /*   String SQL="select name from stock where qtyOnHand<=20";
+        Connection connection= DbConnection.getDbConnection().getConnection();
         ResultSet resultSet=connection.prepareStatement(SQL).executeQuery();
         List<String>lowStockName =new ArrayList<>();
         while (resultSet.next()){
@@ -40,7 +41,8 @@ public class StockDAOImpl implements StockDAO {
             lowStockName.add(name);
 
         }
-        return lowStockName;
+        return lowStockName;*/
+        return SQLUtil.execute("select name from stock where qtyOnHand<=20");
     }
 
     public  boolean save(Stock entity) throws SQLException, ClassNotFoundException {

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface StockBO {
+public interface StockBO extends SuperBO{
     public ArrayList<StockDTO> getAllStock() throws SQLException, ClassNotFoundException;
 
     public List<String> getLowStockName() throws SQLException;

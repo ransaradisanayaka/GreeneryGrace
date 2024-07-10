@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 
 
 public class OrderFormController {
+    /*
 
     @FXML
     private AnchorPane paneHolder;
@@ -95,6 +96,7 @@ public class OrderFormController {
         }
 
 */
+    /*
 
     private List<OrdersDTo> getAllOrder() {
         List<OrdersDTo> orderList  ;
@@ -158,7 +160,7 @@ public class OrderFormController {
         }
     }
 */
-    public void btnSaveOnAction(ActionEvent actionEvent) {
+  /*  public void btnSaveOnAction(ActionEvent actionEvent) {
         String orderId = txtOrderId.getText();
         String orderQty = txtOrderQty.getText();
         String amount =  txtAmount.getText();
@@ -227,7 +229,7 @@ public class OrderFormController {
     }
 
 
-    public void btnUpdateOnAction(ActionEvent actionEvent) {
+ /*   public void btnUpdateOnAction(ActionEvent actionEvent) {
         String orderId = txtOrderId.getText();
         String orderQty = txtOrderQty.getText();
         String amount =  txtAmount.getText();
@@ -289,5 +291,4 @@ public class OrderFormController {
 
         }
     }
-
-}
+*/

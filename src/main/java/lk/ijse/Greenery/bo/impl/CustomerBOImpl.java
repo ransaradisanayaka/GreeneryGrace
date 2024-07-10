@@ -5,6 +5,8 @@ import lk.ijse.Greenery.dao.DAOFactory;
 import lk.ijse.Greenery.dao.custom.CustomerDAO;
 import lk.ijse.Greenery.dto.CustomerDTO;
 import lk.ijse.Greenery.entity.Customer;
+
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class CustomerBOImpl  implements CustomerBO{
 
 
 
+    @Override
     public boolean saveCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException {
         return customerDAO.save(new Customer(dto.getCustomerId(), dto.getCustomerName(), dto.getCustomerAddress(),dto.getCustomerContact()));
     }
@@ -33,4 +36,8 @@ return customerDAO.update(new Customer(dto.getCustomerId(), dto.getCustomerName(
    public boolean deleteCustomer(String customerId) throws SQLException, ClassNotFoundException {
 return customerDAO.delete(customerId);
     }
+    public boolean exitCustomer(String customerId) throws SQLException, ClassNotFoundException {
+        return customerDAO.exist(customerId);
+    }
+
 }

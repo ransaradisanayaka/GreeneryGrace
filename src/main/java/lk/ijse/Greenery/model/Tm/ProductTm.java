@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
         private  String unitPrice;
 
 
+        public ProductTm(String productId, String productName, int qty, String description, String unitPrice) {
+        }
     }
 
 

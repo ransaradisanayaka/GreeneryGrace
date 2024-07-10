@@ -2,6 +2,7 @@ package lk.ijse.Greenery.dao.custom.impl;
 
 
 import lk.ijse.Greenery.dao.SQLUtil;
+import lk.ijse.Greenery.dao.SuperDAO;
 import lk.ijse.Greenery.dao.custom.EmployeeDAO;
 import lk.ijse.Greenery.dto.EmployeeDTO;
 import lk.ijse.Greenery.dto.StockDTO;
@@ -12,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class EmployeeDAOImpl implements EmployeeDAO {
+public class EmployeeDAOImpl implements SuperDAO {
 
     public ArrayList<Employee> getAll() throws SQLException, ClassNotFoundException {
         ArrayList<Employee> allEmployee = new ArrayList<>();

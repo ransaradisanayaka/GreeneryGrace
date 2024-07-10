@@ -1,6 +1,7 @@
 package lk.ijse.Greenery.dao.custom.impl;
 
 import lk.ijse.Greenery.dao.SQLUtil;
+import lk.ijse.Greenery.dao.SuperDAO;
 import lk.ijse.Greenery.dao.custom.PaymentDAO;
 import lk.ijse.Greenery.db.DbConnection;
 import lk.ijse.Greenery.dto.PaymentDTO;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentDAOImpl implements PaymentDAO {
+public class PaymentDAOImpl implements SuperDAO {
     public  ArrayList<Payment> getAll() throws SQLException, ClassNotFoundException {
        ArrayList<Payment> allPayment=new ArrayList<>();
         ResultSet resultSet = SQLUtil.execute( "SELECT * FROM payment");

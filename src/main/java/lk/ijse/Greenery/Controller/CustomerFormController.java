@@ -218,6 +218,9 @@ customerBO.saveCustomer(customer);
             }
          }
 
+    boolean exitCustomer(String customerId) throws SQLException, ClassNotFoundException {
+        return customerBO.exitCustomer(customerId);
+    }
 
 
          public void btnDeleteOnAction(ActionEvent actionEvent) {

@@ -67,7 +67,7 @@ public class ProductFormController {
 
 
 
-    private List<ProductDTo> productList = new ArrayList<>();
+    //private List<ProductDTo> productList = new ArrayList<>();
   ProductBO productBO= (ProductBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PRODUCT);
 
     public void initialize() throws SQLException, ClassNotFoundException {
@@ -169,7 +169,7 @@ public class ProductFormController {
     void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String productId = txtProductId.getText();
         String productName = txtProductName.getText();
-        String qty =  txtQty.getText();
+        int qty = Integer.parseInt(txtQty.getText());
         String description = txtDescription.getText();
         String unitPrice= txtUnitPrice.getText();
 
@@ -199,7 +199,7 @@ ProductTable.getItems().add(new ProductTm(productId,productName,qty,description,
     void btnUpdateOnAction(ActionEvent event) {
         String productId = txtProductId.getText();
         String productName = txtProductName.getText();
-        String qty =  txtQty.getText();
+        int qty = Integer.parseInt(txtQty.getText());
         String description= txtDescription.getText();
         String unitPrice=txtUnitPrice.getText();
 

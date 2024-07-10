@@ -25,10 +25,10 @@ public class ProductBOImpl implements ProductBO {
         }return allProduct;
     }
 
-    public static List<String> getCodes() throws SQLException {
+  /*  public static List<String> getProductId() throws SQLException {
         String sql = "SELECT productId FROM product";
 
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
+        PreparedStatement pstm = DbConnection.ggetDbConnection()
                 .prepareStatement(sql);
 
         List<String> codeList = new ArrayList<>();
@@ -41,7 +41,7 @@ public class ProductBOImpl implements ProductBO {
         return codeList;
     }
 
-    @Override
+ */   @Override
     public boolean saveProduct(ProductDTO dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.execute("INSERT INTO product VALUES(?, ?, ?, ?,?)", dto.getProductId(), dto.getProductName(), dto.getQty(), dto.getDescription(), dto.getUnitPrice());
 

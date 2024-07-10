@@ -1,4 +1,5 @@
 package lk.ijse.Greenery.bo;
 
-public interface OrderBO {
+public interface OrderBO extends SuperBO{
+
 }

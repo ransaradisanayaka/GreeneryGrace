@@ -25,10 +25,11 @@ public class ProductDAOImpl implements SuperDAO {
         return allProduct;
     }
 
-    public static List<String> getCodes() throws SQLException {
+    public static List<String> getProductId() throws SQLException {
         String sql = "SELECT productId FROM product";
 
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
+        PreparedStatement pstm = null;
+        pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
         List<String> codeList = new ArrayList<>();
@@ -55,31 +56,11 @@ public class ProductDAOImpl implements SuperDAO {
 
     }
 
-    public ProductDTo searchById(String productId) throws SQLException {
-        String sql = "SELECT * FROM product WHERE productId=?";
-
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        pstm.setObject(1,productId);
-        ResultSet resultSet = pstm.executeQuery();
-
-        ProductDTo product = null;
+    public Product searchById(String productId) throws SQLException, ClassNotFoundException {
+       ResultSet rst = SQLUtil.execute("SELECT * FROM product WHERE productId=?",productId+"");
 
 
-
-
-        if (resultSet.next()) {
-            String Id= resultSet.getString(1);
-            String productName= resultSet.getString(2);
-            String  qty= resultSet.getString(3);
-            String description= resultSet.getString(4);
-            String unitPrice = resultSet.getString(5);
-
-
-            product= new ProductDTo( Id, productName,qty,description,unitPrice);
-        }
-        return product;
+        return new Product(productId + "", rst.getString("productName"), rst.getString("qty"),rst.getString("description"),rst.getString("unitPrice"));
     }
 
 

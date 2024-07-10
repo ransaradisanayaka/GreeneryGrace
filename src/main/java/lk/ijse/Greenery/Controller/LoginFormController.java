@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.Greenery.db.DbConnection;
+import lk.ijse.Greenery.dto.UserDTO;
 import lk.ijse.Greenery.model.UserDTo;
 import lk.ijse.Greenery.repository.UserRepo;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class LoginFormController {
 
 
    @FXML
-   void btnLoginOnAction(ActionEvent actionEvent) throws IOException, SQLException {
+   void btnLoginOnAction(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException {
        String userName = txtUserName.getText();
        String password = txtPassword.getText();
        if (userName.isEmpty() || password.isEmpty()) {
@@ -56,7 +57,8 @@ public class LoginFormController {
            // Reset border color if both fields are filled
            txtUserName.setStyle("-fx-border-color: green;");
            txtPassword.setStyle("-fx-border-color: green;");
-           UserDTo user = UserRepo.setLoginOnDetail(userName);
+           UserDTO user = UserRepo.setLoginOnDetail(userName)
+                   ;
            if (user != null) {
                if (user.getPassWord().equals(password)) {
                    navigateDashboard();
@@ -90,7 +92,10 @@ public class LoginFormController {
     private void checkCredential(String username, String pw) throws SQLException, IOException {
         String sql = "SELECT userName, passWord FROM User WHERE userName = ?";
 
-        Connection connection = DbConnection.getInstance().getConnection();
+        Connection connection = null;
+
+            connection = DbConnection.getInstance().getConnection();
+
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setObject(1, username);
 

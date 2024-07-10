@@ -20,6 +20,9 @@ public class Product {
 
     }
 
+    public Product(String productId, String productName, int qty, String description, String unitPrice) {
+    }
+
     public String getProductId() {
         return productId;
     }

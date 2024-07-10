@@ -28,7 +28,7 @@ public class StockBOImpl implements SuperBO {
 
     }
 
-    public List<String> getLowStockName() throws SQLException {
+    public List<String> getLowStockName() throws SQLException, ClassNotFoundException {
         String SQL = "select name from stock where qtyOnHand<=20";
         Connection connection = DbConnection.getInstance().getConnection();
         ResultSet resultSet = connection.prepareStatement(SQL).executeQuery();

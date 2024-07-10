@@ -14,21 +14,7 @@ import java.util.List;
 
 public interface ProductBO extends SuperBO {
     public ArrayList<ProductDTO> getAllProduct() throws SQLException, ClassNotFoundException;
-    public static List<String> getCodes() throws SQLException {
-        String sql = "SELECT productId FROM product";
 
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        List<String> codeList = new ArrayList<>();
-
-        ResultSet resultSet = pstm.executeQuery();
-
-        while (resultSet.next()) {
-            codeList.add(resultSet.getString(1));
-        }
-        return codeList;
-    }
 
     public boolean saveProduct(ProductDTO dto) throws SQLException, ClassNotFoundException;
 

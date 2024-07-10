@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.Greenery.db.DbConnection;
+import lk.ijse.Greenery.dto.UserDTO;
 import lk.ijse.Greenery.model.UserDTo;
 import lk.ijse.Greenery.repository.UserRepo;
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class RegisterFormController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "something happend!").show();
+
         }
     }
     private void removeError(TextField textfield) {
@@ -92,7 +94,7 @@ public class RegisterFormController {
             removeError(txtPw);
         }
     }
-    public void btnSignIn(ActionEvent actionEvent) throws IOException, SQLException {
+    public void btnSignIn(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException {
         String userId = txtUserId.getText();
         String userName = txtName.getText();
         String passWord = txtPw.getText();
@@ -116,7 +118,7 @@ public class RegisterFormController {
             // Reset border color if both fields are filled
             txtName.setStyle("-fx-border-color: green;");
             txtPw.setStyle("-fx-border-color: green;");
-            UserDTo user = UserRepo.setLoginOnDetail(userName);
+            UserDTO user = UserRepo.setLoginOnDetail(userName);
             saveUser(userId, userName, passWord);
         }
         AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/Dashboardmain_form.fxml"));

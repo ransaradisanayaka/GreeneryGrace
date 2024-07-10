@@ -1,6 +1,7 @@
 package lk.ijse.Greenery.dao.custom.impl;
 
 import lk.ijse.Greenery.dao.SQLUtil;
+import lk.ijse.Greenery.dao.SuperDAO;
 import lk.ijse.Greenery.db.DbConnection;
 import lk.ijse.Greenery.model.SupplierDTo;
 
@@ -9,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class SupplierDAOImpl {
+public class SupplierDAOImpl implements SuperDAO {
     public ArrayList<SupplierDTo> getAll() throws SQLException, ClassNotFoundException {
         ArrayList<SupplierDTo> allSupplier = new ArrayList<>();
         ResultSet rst = SQLUtil.execute("SELECT * FROM employee");
@@ -24,7 +25,7 @@ public class SupplierDAOImpl {
 
     }
 
-    public static SupplierDTo searchById(String supplierId) throws SQLException {
+    public static SupplierDTo searchById(String supplierId) throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM supplier WHERE supplierId=?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
